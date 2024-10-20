@@ -10,6 +10,10 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@fontsource/inter": "^5.1.0",
+    "@mui/joy": "5.0.0-beta.48",
     "plasmo": "0.89.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
