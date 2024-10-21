@@ -29,6 +29,9 @@ importers:
       '@plasmohq/storage':
         specifier: ^1.12.0
         version: 1.12.0(react@18.2.0)
+      mui-color-input:
+        specifier: ^4.0.2
+        version: 4.0.2(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@emotion/styled@11.11.0(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@types/react@18.2.48)(react@18.2.0))(@mui/material@5.14.5(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@emotion/styled@11.11.0(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@types/react@18.2.48)(react@18.2.0))(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       plasmo:
         specifier: 0.89.3
         version: 0.89.3(@swc/core@1.7.36(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)(lodash@4.17.21)(postcss@8.4.47)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -141,6 +144,10 @@ packages:
   '@babel/types@7.25.8':
     resolution: {integrity: sha512-JWtuCu8VQsMladxVz/P4HzHUGCAwpuqacmowgXFs5XjxIgKuNjnLokQzuVjlTvIzODaDmpjT3oxcC48vyk9EWg==}
     engines: {node: '>=6.9.0'}
+
+  '@ctrl/tinycolor@4.1.0':
+    resolution: {integrity: sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==}
+    engines: {node: '>=14'}
 
   '@emotion/babel-plugin@11.12.0':
     resolution: {integrity: sha512-y2WQb+oP8Jqvvclh8Q55gLUyb7UFvgv7eJfsj7td5TToBrIUtPay2kMrZi4xjq9qw2vD0ZR5fSho0yqoFgX7Rw==}
@@ -2640,6 +2647,19 @@ packages:
   msgpackr@1.8.5:
     resolution: {integrity: sha512-mpPs3qqTug6ahbblkThoUY2DQdNXcm4IapwOS3Vm/87vmpzLVelvp9h3It1y9l1VPpiFLV11vfOXnmeEwiIXwg==}
 
+  mui-color-input@4.0.2:
+    resolution: {integrity: sha512-TXbdtgBqyeUFXmmT2PW4LZfr/j14J24wtjp0GhQxmskwRl7NF54UmBFs1/Qsx9jev3V67weAs0GyYUT+Nkw9Tg==}
+    peerDependencies:
+      '@emotion/react': ^11.5.0
+      '@emotion/styled': ^11.3.0
+      '@mui/material': ^5.0.0 || ^6.0.0
+      '@types/react': ^18.0.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
   mute-stream@1.0.0:
     resolution: {integrity: sha512-avsJQhyd+680gKXyG/sQc0nXaC6rBkPOfyHYcFb9+hdkqQkR9bdnkJ0AMZhke0oesPqIO+mFFJ+IdBc7mst4IA==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
@@ -3438,6 +3458,8 @@ snapshots:
       '@babel/helper-string-parser': 7.25.7
       '@babel/helper-validator-identifier': 7.25.7
       to-fast-properties: 2.0.0
+
+  '@ctrl/tinycolor@4.1.0': {}
 
   '@emotion/babel-plugin@11.12.0':
     dependencies:
@@ -6215,6 +6237,17 @@ snapshots:
   msgpackr@1.8.5:
     optionalDependencies:
       msgpackr-extract: 3.0.3
+
+  mui-color-input@4.0.2(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@emotion/styled@11.11.0(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@types/react@18.2.48)(react@18.2.0))(@mui/material@5.14.5(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@emotion/styled@11.11.0(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@types/react@18.2.48)(react@18.2.0))(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      '@ctrl/tinycolor': 4.1.0
+      '@emotion/react': 11.11.1(@types/react@18.2.48)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@types/react@18.2.48)(react@18.2.0)
+      '@mui/material': 5.14.5(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@emotion/styled@11.11.0(@emotion/react@11.11.1(@types/react@18.2.48)(react@18.2.0))(@types/react@18.2.48)(react@18.2.0))(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    optionalDependencies:
+      '@types/react': 18.2.48
 
   mute-stream@1.0.0: {}
 

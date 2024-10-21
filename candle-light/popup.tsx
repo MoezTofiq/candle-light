@@ -1,13 +1,22 @@
 import GradientIcon from "@mui/icons-material/Gradient"
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew"
-import { Input, Slider } from "@mui/material"
+import { CssBaseline, Input, Slider } from "@mui/material"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import Link from "@mui/material/Link"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
+import { MuiColorInput } from "mui-color-input"
 import React from "react"
+
+// TODO : add default settings
+// TODO : add default confirmation
+// TODO : link color to primary color for theme
+// TODO : apply changes to storage
+// TODO : Link external link buttons
+
+// TODO : add donation link
 
 function IndexPopup() {
   const [value, setValue] = React.useState(30)
@@ -28,12 +37,19 @@ function IndexPopup() {
     }
   }
 
+  const [color, setColor] = React.useState("#ffffff")
+
+  const handleChange = (newValue) => {
+    setColor(newValue)
+  }
+
   return (
     <Stack
       spacing={1}
       direction="column"
       useFlexGap
-      sx={{ flexWrap: "wrap", width: "750px" }}>
+      sx={{ flexWrap: "wrap", width: "370px", height: "570px" }}>
+      <CssBaseline />
       <Stack direction="row" spacing={3}>
         <Box>
           <Button>Donate</Button>
@@ -48,12 +64,24 @@ function IndexPopup() {
         </Box>
       </Stack>
 
-      <Box> tint color choose</Box>
+      <Box>
+        <Typography>Tint Color</Typography>
+        <MuiColorInput
+          isAlphaHidden
+          format="rgb"
+          value={color}
+          onChange={handleChange}
+        />
+      </Box>
+
+      <Box>
+        <Button>reset to default</Button>
+      </Box>
 
       <Box>
         <Typography>Tint opacity</Typography>
         <Stack direction="row" spacing={3}>
-          <GradientIcon />
+          <GradientIcon sx={{ color: color }} />
           <Slider
             value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
