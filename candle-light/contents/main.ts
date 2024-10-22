@@ -2,31 +2,38 @@ import type { PlasmoCSConfig } from "plasmo"
 
 import { Storage } from "@plasmohq/storage"
 
+const storage = new Storage()
+const elementName = "temptemp"
+
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"],
   run_at: "document_start",
   all_frames: true
 }
 
-const storage = new Storage()
-
-// TODO when storage updates apply changes to webpage
-
-// storage.watch({
-//   color: (c) => {
-//     console.log(c.newValue)
-//   },
-//   opacity: (c) => {
-//     console.log(c.newValue)
-//   }
-// })
+storage.watch({
+  color: (c) => {
+    console.log(c.newValue)
+    const element = document.getElementById(elementName)
+    if (element) {
+      element.style.backgroundColor = c.newValue
+    }
+  },
+  opacity: (c) => {
+    console.log(c.newValue)
+    const element = document.getElementById(elementName)
+    if (element) {
+      element.style.opacity = c.newValue
+    }
+  }
+})
 
 const applyTint = async () => {
   const color = await storage.get("color")
   const opacity = await storage.get("opacity")
   console.log(color, opacity)
   const overlay = document.createElement("div")
-  overlay.id = "temptemp"
+  overlay.id = elementName
   overlay.style.position = "fixed"
   overlay.style.top = "0"
   overlay.style.left = "0"

@@ -10,23 +10,54 @@ import Typography from "@mui/material/Typography"
 import { MuiColorInput } from "mui-color-input"
 import React from "react"
 
+import { Storage } from "@plasmohq/storage"
+
+const storage = new Storage()
+
 // TODO : add default settings
 // TODO : add default confirmation
 // TODO : link color to primary color for theme
-// TODO : apply changes to storage
 // TODO : Link external link buttons
 
 // TODO : add donation link
+// TODO : check the error : Uncaught (in promise) Error: This request exceeds the MAX_WRITE_OPERATIONS_PER_MINUTE quota.
 
 function IndexPopup() {
-  const [value, setValue] = React.useState(30)
+  const [value, setValue] = React.useState(0)
+  const [color, setColor] = React.useState("#ffffff")
 
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+  React.useEffect(() => {
+    const initState = async () => {
+      const color = await storage.get("color")
+      const opacity = await storage.get("opacity")
+      setValue(Number(opacity) * 100)
+      setColor(color)
+    }
+    initState()
+  }, [])
+
+  const handleSliderChange = async (
+    event: Event,
+    newValue: number | number[]
+  ) => {
     setValue(newValue as number)
+    await storage.set("opacity", `${(newValue as number) / 100}`)
   }
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value === "" ? 0 : Number(event.target.value))
+  const handleInputChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let number: number = 0
+    if (event.target.value === "") {
+      number = 0
+    } else {
+      number = Number(event.target.value)
+      number = number > 100 ? 100 : number
+      number = number < 0 ? 0 : number
+    }
+
+    setValue(number)
+    await storage.set("opacity", `${number / 100}`)
   }
 
   const handleBlur = () => {
@@ -37,10 +68,9 @@ function IndexPopup() {
     }
   }
 
-  const [color, setColor] = React.useState("#ffffff")
-
-  const handleChange = (newValue) => {
+  const handleChange = async (newValue) => {
     setColor(newValue)
+    await storage.set("color", `${newValue}`)
   }
 
   return (
@@ -111,7 +141,7 @@ function IndexPopup() {
           <Button>other projects</Button>
         </Box>
         <Box>
-          <Button>repot a bug</Button>
+          <Button>report a bug</Button>
         </Box>
       </Stack>
     </Stack>
