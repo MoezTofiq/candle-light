@@ -25,6 +25,16 @@ storage.watch({
     if (element) {
       element.style.opacity = c.newValue
     }
+  },
+  power: async (c) => {
+    console.log(c.newValue)
+    const element = document.getElementById(elementName)
+    if (element && c.newValue === true) {
+      const opacity = await storage.get("opacity")
+      element.style.opacity = opacity
+    } else if (element) {
+      element.style.opacity = "0"
+    }
   }
 })
 

@@ -14,7 +14,6 @@ import { Storage } from "@plasmohq/storage"
 
 const storage = new Storage()
 
-// TODO : add default settings
 // TODO : add default confirmation
 // TODO : link color to primary color for theme
 // TODO : Link external link buttons
@@ -25,11 +24,15 @@ const storage = new Storage()
 function IndexPopup() {
   const [value, setValue] = React.useState(0)
   const [color, setColor] = React.useState("#ffffff")
+  const [power, setPower] = React.useState(true)
 
   React.useEffect(() => {
     const initState = async () => {
       const color = await storage.get("color")
       const opacity = await storage.get("opacity")
+      const power = await storage.get("power")
+      console.log("init : ", color, opacity, power)
+      setPower(power === "true" || power ? true : false)
       setValue(Number(opacity) * 100)
       setColor(color)
     }
@@ -73,6 +76,18 @@ function IndexPopup() {
     await storage.set("color", `${newValue}`)
   }
 
+  const handleDefault = async () => {
+    await storage.set("color", `orange`)
+    await storage.set("opacity", `0.3`)
+    setColor("orange")
+    setValue(30)
+  }
+
+  const handlePower = async () => {
+    await storage.set("power", !power)
+    setPower(!power)
+  }
+
   return (
     <Stack
       spacing={1}
@@ -88,7 +103,7 @@ function IndexPopup() {
           <Button>logo</Button>
         </Box>
         <Box>
-          <IconButton>
+          <IconButton onClick={handlePower} sx={{ color: power ? color : "" }}>
             <PowerSettingsNewIcon />
           </IconButton>
         </Box>
@@ -105,7 +120,9 @@ function IndexPopup() {
       </Box>
 
       <Box>
-        <Button>reset to default</Button>
+        <Button fullWidth onClick={handleDefault}>
+          reset to default
+        </Button>
       </Box>
 
       <Box>
