@@ -10,16 +10,17 @@ import Typography from "@mui/material/Typography"
 import { MuiColorInput } from "mui-color-input"
 import React from "react"
 
+import { sendToContentScript } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
 
 const storage = new Storage()
 
-// TODO : add default confirmation
-// TODO : link color to primary color for theme
+// TODO : add default confirmation through modal
 // TODO : Link external link buttons
 
 // TODO : add donation link
-// TODO : check the error : Uncaught (in promise) Error: This request exceeds the MAX_WRITE_OPERATIONS_PER_MINUTE quota.
+// TODO : add code for popup to save changes to storage on close
+// TODO : style the pop up a bit to make it more visually better
 
 function IndexPopup() {
   const [value, setValue] = React.useState(0)
@@ -31,7 +32,7 @@ function IndexPopup() {
       const color = await storage.get("color")
       const opacity = await storage.get("opacity")
       const power = await storage.get("power")
-      console.log("init : ", color, opacity, power)
+      console.log("init : ", `${color}, ${opacity}, ${power}`)
       setPower(power === "true" || power ? true : false)
       setValue(Number(opacity) * 100)
       setColor(color)
@@ -44,7 +45,10 @@ function IndexPopup() {
     newValue: number | number[]
   ) => {
     setValue(newValue as number)
-    await storage.set("opacity", `${(newValue as number) / 100}`)
+    await sendToContentScript({
+      name: "setOpacity",
+      body: { opacity: `${(newValue as number) / 100}` }
+    })
   }
 
   const handleInputChange = async (
@@ -60,7 +64,10 @@ function IndexPopup() {
     }
 
     setValue(number)
-    await storage.set("opacity", `${number / 100}`)
+    await sendToContentScript({
+      name: "setOpacity",
+      body: { opacity: `${number / 100}` }
+    })
   }
 
   const handleBlur = () => {
@@ -73,18 +80,26 @@ function IndexPopup() {
 
   const handleChange = async (newValue) => {
     setColor(newValue)
-    await storage.set("color", `${newValue}`)
+    await sendToContentScript({
+      name: "setColor",
+      body: { color: newValue }
+    })
   }
 
   const handleDefault = async () => {
-    await storage.set("color", `orange`)
-    await storage.set("opacity", `0.3`)
     setColor("orange")
     setValue(30)
+    await sendToContentScript({
+      name: "setDefault",
+      body: { color: "orange", opacity: 0.3 }
+    })
   }
 
   const handlePower = async () => {
-    await storage.set("power", !power)
+    await sendToContentScript({
+      name: "setPower",
+      body: { power: !power, opacity: `${value / 100}` }
+    })
     setPower(!power)
   }
 
@@ -120,19 +135,18 @@ function IndexPopup() {
       </Box>
 
       <Box>
-        <Button fullWidth onClick={handleDefault}>
-          reset to default
-        </Button>
-      </Box>
-
-      <Box>
         <Typography>Tint opacity</Typography>
         <Stack direction="row" spacing={3}>
           <GradientIcon sx={{ color: color }} />
           <Slider
             value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
+            step={5}
+            min={0}
+            max={100}
+            marks
             aria-labelledby="input-slider"
+            sx={{ color: color }}
           />
           <Input
             value={value}
@@ -148,6 +162,12 @@ function IndexPopup() {
             }}
           />
         </Stack>
+      </Box>
+
+      <Box>
+        <Button fullWidth onClick={handleDefault}>
+          reset to default
+        </Button>
       </Box>
 
       <Stack direction="row" spacing={3}>

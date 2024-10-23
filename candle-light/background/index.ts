@@ -14,5 +14,10 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     await storage.set("power", true)
   } else if (details.reason === "update") {
     console.log("Extension updated!")
+    const storage = new Storage()
+
+    await storage.set("color", "rgb(255, 255, 0)")
+    await storage.set("opacity", "0.3")
+    await storage.set("power", true)
   }
 })

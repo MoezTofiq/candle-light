@@ -1,5 +1,6 @@
 import type { PlasmoCSConfig } from "plasmo"
 
+import { relayMessage, type PlasmoMessaging } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
 
 const storage = new Storage()
@@ -10,6 +11,55 @@ export const config: PlasmoCSConfig = {
   run_at: "document_start",
   all_frames: true
 }
+
+// Define global default values
+const DEFAULTS = {
+  opacity: "0.3", // Default opacity
+  backgroundColor: "initial" // Default background color
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.log("Received message in content script:", message)
+
+  const element = document.getElementById(elementName)
+
+  if (!element) {
+    console.error("Element not found:", elementName)
+    sendResponse({ received: false, error: "Element not found" })
+    return true
+  }
+
+  const { name, body = {} } = message
+
+  switch (name) {
+    case "setDefault":
+      element.style.backgroundColor = body.color || DEFAULTS.backgroundColor
+      element.style.opacity = body.opacity || DEFAULTS.opacity
+      break
+
+    case "setPower":
+      element.style.opacity = body.power
+        ? body.opacity || DEFAULTS.opacity
+        : "0"
+      break
+
+    case "setColor":
+      element.style.backgroundColor = body.color || DEFAULTS.backgroundColor
+      break
+
+    case "setOpacity":
+      element.style.opacity = body.opacity || DEFAULTS.opacity
+      break
+
+    default:
+      console.warn("Unknown message name:", name)
+      sendResponse({ received: false, error: "Unknown message name" })
+      return true
+  }
+
+  sendResponse({ received: true })
+  return true
+})
 
 storage.watch({
   color: (c) => {
