@@ -26,11 +26,10 @@ const storage = new Storage()
 
 // TODO : add default confirmation through modal
 
-// TODO : Link external link buttons
-
-// TODO : add donation link
-
-// TODO : style the pop up a bit to make it more visually better
+// TODO : link about me page
+// TODO : link other projects page
+// TODO : link report a bug page
+// TODO : link donation page
 
 function IndexPopup() {
   const [value, setValue] = React.useState(0)
@@ -147,11 +146,11 @@ function IndexPopup() {
                 </IconButton>
               </Box>
             </Stack>
-            <Box>
+            {/* <Box>
               <Button fullWidth variant="outlined">
                 Donate
               </Button>
-            </Box>
+            </Box> */}
             <Divider />
 
             <Stack
@@ -213,7 +212,7 @@ function IndexPopup() {
 
             <Divider />
 
-            <Stack direction="row" spacing={3}>
+            {/* <Stack direction="row" spacing={3}>
               <Box>
                 <Button variant="outlined">About me</Button>
               </Box>
@@ -223,7 +222,7 @@ function IndexPopup() {
               <Box>
                 <Button variant="outlined">report a bug</Button>
               </Box>
-            </Stack>
+            </Stack> */}
           </Stack>
         </CardContent>
       </Card>
