@@ -21,6 +21,7 @@ const storage = new Storage()
 // TODO : add donation link
 // TODO : add code for popup to save changes to storage on close
 // TODO : style the pop up a bit to make it more visually better
+// TODO : save color on popup close
 
 function IndexPopup() {
   const [value, setValue] = React.useState(0)

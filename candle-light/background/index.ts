@@ -21,3 +21,10 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     await storage.set("power", true)
   }
 })
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "popupClosed") {
+    console.log("Popup was closed, running background task...")
+    // Your background logic here
+  }
+})
