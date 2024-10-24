@@ -1,30 +1,19 @@
 import { Storage } from "@plasmohq/storage"
 
+import { COLOR, OPACITY } from "~shared/defaults"
+
 export {}
 
 console.log("background active")
 
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === "install") {
-    console.log("Extension installed for the first time!")
     const storage = new Storage()
 
-    await storage.set("color", "rgb(255, 92, 0)")
-    await storage.set("opacity", "0.3")
+    await storage.set("color", COLOR)
+    await storage.set("opacity", OPACITY)
     await storage.set("power", true)
   } else if (details.reason === "update") {
     console.log("Extension updated!")
-    const storage = new Storage()
-
-    await storage.set("color", "rgb(255, 92, 0)")
-    await storage.set("opacity", "0.3")
-    await storage.set("power", true)
-  }
-})
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.action === "popupClosed") {
-    console.log("Popup was closed, running background task...")
-    // Your background logic here
   }
 })

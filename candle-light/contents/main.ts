@@ -1,10 +1,11 @@
 import type { PlasmoCSConfig } from "plasmo"
 
-import { relayMessage, type PlasmoMessaging } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
 
+import { COLOR, OPACITY } from "~shared/defaults"
+
 const storage = new Storage()
-const elementName = "temptemp"
+const elementName = "CANDLELIGHT_ELEMENT"
 
 let color: string,
   opacity: string,
@@ -14,8 +15,8 @@ let color: string,
 
 const setStorage = () => {
   didChange = false
-  storage.set("color", color || "rgb(255, 255, 0)")
-  storage.set("opacity", opacity || "0.3")
+  storage.set("color", color || COLOR)
+  storage.set("opacity", opacity || OPACITY)
   storage.set("power", power ?? true)
 }
 
@@ -45,12 +46,6 @@ export const config: PlasmoCSConfig = {
   all_frames: true
 }
 
-// Define global default values
-const DEFAULTS = {
-  opacity: "0.3", // Default opacity
-  backgroundColor: "initial" // Default background color
-}
-
 initGlobals()
 
 window.addEventListener("beforeunload", (event) => {
@@ -78,8 +73,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   switch (name) {
     case "setDefault":
-      element.style.backgroundColor = body.color || DEFAULTS.backgroundColor
-      element.style.opacity = body.opacity || DEFAULTS.opacity
+      element.style.backgroundColor = body.color || COLOR
+      element.style.opacity = body.opacity || OPACITY
 
       color = body.color
       opacity = body.opacity
@@ -87,24 +82,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       break
 
     case "setPower":
-      element.style.opacity = body.power
-        ? body.opacity || DEFAULTS.opacity
-        : "0"
+      element.style.opacity = body.power ? body.opacity || OPACITY : "0"
 
-      opacity = body.power ? body.opacity || DEFAULTS.opacity : "0"
+      opacity = body.power ? body.opacity || OPACITY : "0"
       power = body.power
       setTimer()
       break
 
     case "setColor":
-      element.style.backgroundColor = body.color || DEFAULTS.backgroundColor
+      element.style.backgroundColor = body.color || COLOR
 
       color = body.color
       setTimer()
       break
 
     case "setOpacity":
-      element.style.opacity = body.opacity || DEFAULTS.opacity
+      element.style.opacity = body.opacity || OPACITY
 
       opacity = body.opacity
       setTimer()

@@ -6,7 +6,6 @@ import Button from "@mui/material/Button"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import IconButton from "@mui/material/IconButton"
-import Link from "@mui/material/Link"
 import Stack from "@mui/material/Stack"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
@@ -15,6 +14,8 @@ import React from "react"
 
 import { sendToContentScript } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
+
+import { COLOR, OPACITY } from "~shared/defaults"
 
 const darkTheme = createTheme({
   palette: {
@@ -30,10 +31,13 @@ const storage = new Storage()
 // TODO : link other projects page
 // TODO : link report a bug page
 // TODO : link donation page
+// TODO : link candle light homepage/ description page
+
+// TODO : create / add icon for the extension
 
 function IndexPopup() {
   const [value, setValue] = React.useState(0)
-  const [color, setColor] = React.useState("#ffffff")
+  const [color, setColor] = React.useState(COLOR)
   const [power, setPower] = React.useState(true)
 
   React.useEffect(() => {
