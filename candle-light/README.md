@@ -1,15 +1,16 @@
 # PROJECT DEVELOPMENT ENVIRONMENT
 
-- NODE : `v20.11.0`
-- PACKAGE MANAGER : `9.4.0`
+- NODE : `v23.0.0`
+- PACKAGE MANAGER : `9.12.2`
 - FRAMEWORK : PLASMO [Documentation](https://docs.plasmo.com/)
 - FRONTEND : REACT + TYPESCRIPT
-- OS : `windows 11 home`
-- IDE : `visual studio code `
+- OS : `Ubuntu 24.04.1 LTS`
+- OS RELEASE : ` 24.04`
+- IDE : `visual studio code`
 
 ## INSTALL THE PROJECTS DECENCIES
 
-'https://partner.microsoft.com/en-us/dashboard/microsoftedge/7c62f3e2-7f24-4ea8-a3b7-39ae0c92124d/packages/dashboard'
+<!-- 'https://partner.microsoft.com/en-us/dashboard/microsoftedge/7c62f3e2-7f24-4ea8-a3b7-39ae0c92124d/packages/dashboard' -->
 
 In the terminal run
 
@@ -17,30 +18,12 @@ In the terminal run
 pnpm install
 ```
 
-Note: if you encounter an error run
-
-```bash
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
-```
-
 ## RUNNING THE PROJECT
-
-Install packages:
-
-```bash
-pnpm install
-```
 
 Run (the project locally) the development server:
 
 ```bash
 pnpm dev
-```
-
-Note: if that does not work run
-
-```bash
-pnpm plasmo dev --verbose
 ```
 
 For firefox use :
@@ -66,4 +49,4 @@ For firefox : (this will create a zip file specifically for firefox)
 pnpm build --zip --target=firefox-mv2
 ```
 
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
+This should create a production bundle similar to the one submitted
