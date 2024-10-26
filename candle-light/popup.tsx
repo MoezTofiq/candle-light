@@ -35,6 +35,7 @@ const storage = new Storage()
 
 // TODO : create / add icon for the extension
 // TODO : updated read me for git repo
+// TODO : updated read me for firefox installation
 
 // TODO : add to the name : candleLight blue light filter
 // TODO : add extension to firefox
