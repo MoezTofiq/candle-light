@@ -27,13 +27,21 @@ const storage = new Storage()
 
 // TODO : add default confirmation through modal
 
-// TODO : link about me page
-// TODO : link other projects page
-// TODO : link report a bug page
-// TODO : link donation page
-// TODO : link candle light homepage/ description page
+// TODO : link about me page (need to create first)
+// TODO : link other projects page (need to create first)
+// TODO : link report a bug page (need to create first)
+// TODO : link donation page (need to create first)
+// TODO : link candle light homepage/ description page (need to create first)
 
 // TODO : create / add icon for the extension
+// TODO : updated read me for git repo
+
+// TODO : add to the name : candleLight blue light filter
+// TODO : add extension to firefox
+// TODO : add extension to edge
+// TODO : add extension to chrome
+// TODO : add extension to opera
+// TODO : add extension to safari (if people ask for it)
 
 function IndexPopup() {
   const [value, setValue] = React.useState(0)
