@@ -25,8 +25,7 @@ const darkTheme = createTheme({
 
 const storage = new Storage()
 
-// TODO : check extension on firefox browser -> found bug : decreasing the tint and loading another tab reverts to the original color (fire fox mv3 only) ->to fix this have all the values be sent regardless of change
-// TODO : add extension to firefox
+// TODO : add extension to firefox (in review)
 
 // TODO : check extension on firefox for android browser
 
@@ -40,7 +39,6 @@ const storage = new Storage()
 
 // TODO : create / add icon for the extension
 // TODO : updated read me for git repo
-// TODO : updated read me for firefox installation
 
 // TODO : add to the name : candleLight blue light filter
 // TODO : add extension to edge (think about it, the account is blocked again)

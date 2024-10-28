@@ -1,7 +1,7 @@
 # PROJECT DEVELOPMENT ENVIRONMENT
 
 - NODE : `v23.0.0`
-- PACKAGE MANAGER : `9.12.2`
+- PNPM PACKAGE MANAGER : `9.12.2`
 - FRAMEWORK : PLASMO [Documentation](https://docs.plasmo.com/)
 - FRONTEND : REACT + TYPESCRIPT
 - OS : `Ubuntu 24.04.1 LTS`
@@ -11,6 +11,9 @@
 ## INSTALL THE PROJECTS DECENCIES
 
 <!-- 'https://partner.microsoft.com/en-us/dashboard/microsoftedge/7c62f3e2-7f24-4ea8-a3b7-39ae0c92124d/packages/dashboard' -->
+
+Install Node.js v23.0.0
+Install pnpm package manager v9.12.2
 
 In the terminal run
 
@@ -35,7 +38,7 @@ pnpm dev --verbose --target=firefox-mv2
 Open your browser and load the appropriate development build.
 For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
 
-## PRODUCTION BUILD
+## CREATING PRODUCTION BUILD
 
 Run the following:
 
