@@ -15,6 +15,7 @@ let color: string,
 
 const setStorage = () => {
   didChange = false
+  console.log(`setStorage : ${color} ${opacity}`)
   storage.set("color", color || COLOR)
   storage.set("opacity", opacity || OPACITY)
   storage.set("power", power ?? true)
@@ -82,6 +83,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       break
 
     case "setPower":
+      console.log(
+        "setPower : setting",
+        body.power.body.opacity,
+        " or ",
+        OPACITY
+      )
       element.style.opacity = body.power ? body.opacity || OPACITY : "0"
 
       opacity = body.power ? body.opacity || OPACITY : "0"
@@ -90,15 +97,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       break
 
     case "setColor":
+      console.log("setColor : setting", body.color, " or ", COLOR)
       element.style.backgroundColor = body.color || COLOR
-
       color = body.color
       setTimer()
       break
 
     case "setOpacity":
+      console.log("setOpacity : setting", body.opacity, " or ", OPACITY)
       element.style.opacity = body.opacity || OPACITY
-
       opacity = body.opacity
       setTimer()
       break
