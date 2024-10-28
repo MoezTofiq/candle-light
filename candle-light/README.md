@@ -49,4 +49,4 @@ For firefox : (this will create a zip file specifically for firefox)
 pnpm build --zip --target=firefox-mv2
 ```
 
-This should create a production bundle similar to the one submitted
+This should create a production bundle similar to the one submitted, will be available in the build/firefox-mv2-prod directory.
