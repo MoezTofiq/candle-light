@@ -10,7 +10,7 @@ import Stack from "@mui/material/Stack"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
 import { MuiColorInput } from "mui-color-input"
-import React from "react"
+import React, { useEffect } from "react"
 
 import { sendToContentScript } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
@@ -66,15 +66,23 @@ function IndexPopup() {
     initState()
   }, [])
 
+  const sendNewValues = async (
+    color: string,
+    power: boolean,
+    opacity: string | number
+  ) => {
+    await sendToContentScript({
+      name: "setAll",
+      body: { opacity: opacity, color: color, power: power }
+    })
+  }
+
   const handleSliderChange = async (
     event: Event,
     newValue: number | number[]
   ) => {
     setValue(newValue as number)
-    await sendToContentScript({
-      name: "setOpacity",
-      body: { opacity: `${(newValue as number) / 100}` }
-    })
+    sendNewValues(color, power, `${(newValue as number) / 100}`)
   }
 
   const handleInputChange = async (
@@ -90,10 +98,7 @@ function IndexPopup() {
     }
 
     setValue(number)
-    await sendToContentScript({
-      name: "setOpacity",
-      body: { opacity: `${number / 100}` }
-    })
+    sendNewValues(color, power, `${number / 100}`)
   }
 
   const handleBlur = () => {
@@ -106,26 +111,17 @@ function IndexPopup() {
 
   const handleChange = async (newValue) => {
     setColor(newValue)
-    await sendToContentScript({
-      name: "setColor",
-      body: { color: newValue }
-    })
+    sendNewValues(newValue, power, `${value / 100}`)
   }
 
   const handleDefault = async () => {
-    setColor("orange")
+    setColor(COLOR)
     setValue(30)
-    await sendToContentScript({
-      name: "setDefault",
-      body: { color: "orange", opacity: 0.3 }
-    })
+    sendNewValues(COLOR, power, OPACITY)
   }
 
   const handlePower = async () => {
-    await sendToContentScript({
-      name: "setPower",
-      body: { power: !power, opacity: `${value / 100}` }
-    })
+    sendNewValues(color, !power, `${value / 100}`)
     setPower(!power)
   }
 

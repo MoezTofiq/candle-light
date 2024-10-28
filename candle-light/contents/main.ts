@@ -73,39 +73,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const { name, body = {} } = message
 
   switch (name) {
+    case "setAll":
+      element.style.backgroundColor = body.color || COLOR
+      element.style.opacity = body.power ? body.opacity || OPACITY : "0"
+
+      opacity = body.power ? body.opacity || OPACITY : "0"
+      power = body.power
+      color = body.color
+      setTimer()
+      break
+
     case "setDefault":
       element.style.backgroundColor = body.color || COLOR
       element.style.opacity = body.opacity || OPACITY
 
       color = body.color
-      opacity = body.opacity
-      setTimer()
-      break
-
-    case "setPower":
-      console.log(
-        "setPower : setting",
-        body.power.body.opacity,
-        " or ",
-        OPACITY
-      )
-      element.style.opacity = body.power ? body.opacity || OPACITY : "0"
-
-      opacity = body.power ? body.opacity || OPACITY : "0"
-      power = body.power
-      setTimer()
-      break
-
-    case "setColor":
-      console.log("setColor : setting", body.color, " or ", COLOR)
-      element.style.backgroundColor = body.color || COLOR
-      color = body.color
-      setTimer()
-      break
-
-    case "setOpacity":
-      console.log("setOpacity : setting", body.opacity, " or ", OPACITY)
-      element.style.opacity = body.opacity || OPACITY
       opacity = body.opacity
       setTimer()
       break
