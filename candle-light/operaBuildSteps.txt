@@ -1,0 +1,53 @@
+-> PROJECT DEVELOPMENT ENVIRONMENT
+
+- NODE : `v23.0.0`
+- PNPM PACKAGE MANAGER : `9.12.2`
+- FRAMEWORK : PLASMO [Documentation](https://docs.plasmo.com/)
+- FRONTEND : REACT + TYPESCRIPT
+- OS : `Ubuntu 24.04.1 LTS`
+- OS RELEASE : ` 24.04`
+- IDE : `visual studio code`
+
+-> INSTALL THE PROJECTS DECENCIES
+
+Install Node.js v23.0.0
+Install pnpm package manager v9.12.2
+
+In the terminal run
+
+
+pnpm install
+
+
+-> RUNNING THE PROJECT
+
+Run (the project locally) the development server:
+
+
+pnpm dev
+
+
+For opera use :
+
+
+pnpm dev --verbose --target=opera-mv3
+
+
+Open your browser and load the appropriate development build.
+For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+
+-> CREATING PRODUCTION BUILD
+
+Run the following:
+
+
+pnpm build
+
+
+For opera : (this will create a zip file specifically for opera)
+
+
+pnpm build --zip --target=opera-mv3
+
+
+This should create a production bundle similar to the one submitted, will be available in the build/opera-mv3-prod directory.

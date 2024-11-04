@@ -16,6 +16,7 @@ import { sendToContentScript } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
 
 import { COLOR, OPACITY } from "~shared/defaults"
+import { log } from "~shared/helper"
 
 const darkTheme = createTheme({
   palette: {
@@ -24,8 +25,6 @@ const darkTheme = createTheme({
 })
 
 const storage = new Storage()
-
-// TODO : add extension to firefox (in review)
 
 // TODO : check extension on firefox for android browser
 
@@ -41,9 +40,9 @@ const storage = new Storage()
 // TODO : updated read me for git repo
 
 // TODO : add to the name : candleLight blue light filter
-// TODO : add extension to edge (think about it, the account is blocked again)
-// TODO : add extension to chrome
+// TODO : add extension to edge
 // TODO : add extension to opera
+// TODO : add extension to chrome
 // TODO : add extension to safari (if people ask for it)
 
 function IndexPopup() {
@@ -56,7 +55,7 @@ function IndexPopup() {
       const color = await storage.get("color")
       const opacity = await storage.get("opacity")
       const power = await storage.get("power")
-      console.log("init : ", `${color}, ${opacity}, ${power}`)
+      log("init : ", `${color}, ${opacity}, ${power}`)
       setPower(power === "true" || power ? true : false)
       setValue(Number(opacity) * 100)
       setColor(color)

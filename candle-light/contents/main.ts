@@ -3,6 +3,7 @@ import type { PlasmoCSConfig } from "plasmo"
 import { Storage } from "@plasmohq/storage"
 
 import { COLOR, OPACITY } from "~shared/defaults"
+import { log } from "~shared/helper"
 
 const storage = new Storage()
 const elementName = "CANDLELIGHT_ELEMENT"
@@ -15,7 +16,7 @@ let color: string,
 
 const setStorage = () => {
   didChange = false
-  console.log(`setStorage : ${color} ${opacity}`)
+  log(`setStorage : ${color} ${opacity}`)
   storage.set("color", color || COLOR)
   storage.set("opacity", opacity || OPACITY)
   storage.set("power", power ?? true)
@@ -36,7 +37,7 @@ const setTimer = () => {
 
   // Set a new timer for 5 seconds (example duration)
   timer = setTimeout(() => {
-    console.log("Timer expired. saving changes.")
+    log("Timer expired. saving changes.")
     setStorage()
   }, 1000) // Reset after 5 seconds of inactivity
 }
@@ -51,7 +52,7 @@ initGlobals()
 
 window.addEventListener("beforeunload", (event) => {
   if (didChange) {
-    console.log("User is closing the tab or browser, and changes were made.")
+    log("User is closing the tab or browser, and changes were made.")
     // Optionally, save changes before unloading
     setStorage()
   }
@@ -60,7 +61,7 @@ window.addEventListener("beforeunload", (event) => {
 })
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log("Received message in content script:", message)
+  log("Received message in content script:", message)
 
   const element = document.getElementById(elementName)
 
@@ -104,21 +105,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 storage.watch({
   color: (c) => {
-    console.log(c.newValue)
+    log(c.newValue)
     const element = document.getElementById(elementName)
     if (element) {
       element.style.backgroundColor = c.newValue
     }
   },
   opacity: (c) => {
-    console.log(c.newValue)
+    log(c.newValue)
     const element = document.getElementById(elementName)
     if (element) {
       element.style.opacity = c.newValue
     }
   },
   power: async (c) => {
-    console.log(c.newValue)
+    log(c.newValue)
     const element = document.getElementById(elementName)
     if (element && c.newValue === true) {
       const opacity = await storage.get("opacity")
@@ -130,10 +131,10 @@ storage.watch({
 })
 
 const applyTint = async () => {
-  console.log("applying tint")
+  log("applying tint")
   const color = await storage.get("color")
   const opacity = await storage.get("opacity")
-  console.log(color, opacity)
+  log(color, opacity)
   const overlay = document.createElement("div")
   overlay.id = elementName
   overlay.style.position = "fixed"
