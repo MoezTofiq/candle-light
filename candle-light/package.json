@@ -7,7 +7,11 @@
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
-    "package": "plasmo package"
+    "package": "plasmo package",
+    "remove": "rm -rfv ./build",
+    "zip:opera": "plasmo build --verbose --zip --target=opera-mv3",
+    "start:opera": "plasmo dev --verbose --target=opera-mv3",
+    "build:opera": "plasmo build --verbose --target=opera-mv3"
   },
   "dependencies": {
     "@emotion/cache": "11.11.0",

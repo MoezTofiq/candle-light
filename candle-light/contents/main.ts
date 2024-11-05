@@ -146,7 +146,13 @@ const applyTint = async () => {
   overlay.style.zIndex = "100000"
   overlay.style.backgroundColor = color
   overlay.style.opacity = opacity
-  document.documentElement.appendChild(overlay)
+  const rootHTML = document.getElementsByTagName("html")[0]
+  if (rootHTML) {
+    log("found root html", rootHTML)
+    rootHTML.appendChild(overlay)
+  } else {
+    document.documentElement.appendChild(overlay)
+  }
 }
 
 applyTint()
