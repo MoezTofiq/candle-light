@@ -37,6 +37,9 @@
     "typescript": "5.3.3"
   },
   "manifest": {
+    "permissions": [
+      "alarms"
+    ],
     "host_permissions": [
       "https://*/*"
     ],
