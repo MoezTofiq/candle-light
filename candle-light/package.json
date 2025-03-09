@@ -20,10 +20,10 @@
     "@fontsource/inter": "^5.1.0",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "5.14.5",
-    "@plasmohq/messaging": "^0.6.2",
-    "@plasmohq/storage": "^1.12.0",
+    "@plasmohq/messaging": "^0.7.1",
+    "@plasmohq/storage": "^1.15.0",
     "mui-color-input": "^4.0.2",
-    "plasmo": "0.89.3",
+    "plasmo": "0.90.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
@@ -45,5 +45,15 @@
         "id": "{d4feb1b6-4df9-4390-9896-86b54404b926}"
       }
     }
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract",
+      "mui-color-input",
+      "sharp"
+    ]
   }
 }
