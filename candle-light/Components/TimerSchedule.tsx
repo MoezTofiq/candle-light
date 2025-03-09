@@ -26,6 +26,8 @@ import { COLOR, OPACITY } from "~shared/defaults"
 import { log } from "~shared/helper"
 
 const TimerSchedule = () => {
+  const storage = new Storage()
+
   const [timerEnabled, setTimerEnabled] = useState(false)
   const [timeRange, setTimeRange] = useState([18, 6])
   const [activeDays, setActiveDays] = useState([
@@ -38,7 +40,17 @@ const TimerSchedule = () => {
     false
   ])
 
-  const storage = new Storage()
+  const [tempTimerEnabled, setTempTimerEnabled] = useState(false)
+  const [tempTimeRange, setTempTimeRange] = useState([18, 6])
+  const [tempActiveDays, setTempActiveDays] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ])
 
   useEffect(() => {
     const initState = async () => {
@@ -46,29 +58,63 @@ const TimerSchedule = () => {
       const storedTimeRange = await storage.get("timeRange")
       const storedDays = await storage.get("activeDays")
 
-      setTimerEnabled(storedTimer === "true")
-      setTimeRange(storedTimeRange ? JSON.parse(storedTimeRange) : [18, 6])
-      setActiveDays(
-        storedDays
-          ? JSON.parse(storedDays)
-          : [false, false, false, false, false, false, false]
-      )
+      const parsedTimer = storedTimer === "true"
+      const parsedTimeRange = storedTimeRange
+        ? JSON.parse(storedTimeRange)
+        : [18, 6]
+      const parsedDays = storedDays
+        ? JSON.parse(storedDays)
+        : [false, false, false, false, false, false, false]
+
+      setTimerEnabled(parsedTimer)
+      setTimeRange(parsedTimeRange)
+      setActiveDays(parsedDays)
+
+      setTempTimerEnabled(parsedTimer)
+      setTempTimeRange(parsedTimeRange)
+      setTempActiveDays(parsedDays)
     }
+
     initState()
   }, [])
 
-  const handleTimeRangeChange = async (event, newValue) => {
-    setTimeRange(newValue)
+  const handleTimeRangeChange = (event, newValue) => {
+    setTempTimeRange(newValue)
   }
 
-  const handleDayToggle = async (index) => {
-    const updatedDays = [...activeDays]
+  const handleDayToggle = (index) => {
+    const updatedDays = [...tempActiveDays]
     updatedDays[index] = !updatedDays[index]
-    setActiveDays(updatedDays)
+    setTempActiveDays(updatedDays)
   }
 
-  const handleTimerToggle = async () => {
-    setTimerEnabled(!timerEnabled)
+  const handleTimerToggle = () => {
+    setTempTimerEnabled(!tempTimerEnabled)
+  }
+
+  const handleSave = async () => {
+    setTimerEnabled(tempTimerEnabled)
+    setTimeRange(tempTimeRange)
+    setActiveDays(tempActiveDays)
+
+    await storage.set("timerEnabled", tempTimerEnabled.toString())
+    await storage.set("timeRange", JSON.stringify(tempTimeRange))
+    await storage.set("activeDays", JSON.stringify(tempActiveDays))
+
+    await sendToContentScript({
+      name: "setSchedule",
+      body: {
+        timerEnabled: tempTimerEnabled,
+        timeRange: tempTimeRange,
+        activeDays: tempActiveDays
+      }
+    })
+  }
+
+  const handleCancel = () => {
+    setTempTimerEnabled(timerEnabled)
+    setTempTimeRange(timeRange)
+    setTempActiveDays(activeDays)
   }
 
   return (
@@ -77,17 +123,17 @@ const TimerSchedule = () => {
         <Typography>Schedule Filter Activation</Typography>
         <FormControlLabel
           control={
-            <Checkbox checked={timerEnabled} onChange={handleTimerToggle} />
+            <Checkbox checked={tempTimerEnabled} onChange={handleTimerToggle} />
           }
           label="Enable Timer"
         />
       </Stack>
 
-      {timerEnabled && (
+      {tempTimerEnabled && (
         <>
           <Typography>Day Time For Filter (24 Hours)</Typography>
           <Slider
-            value={timeRange}
+            value={tempTimeRange}
             onChange={handleTimeRangeChange}
             valueLabelDisplay="auto"
             min={0}
@@ -102,7 +148,7 @@ const TimerSchedule = () => {
                   key={index}
                   control={
                     <Checkbox
-                      checked={activeDays[index]}
+                      checked={tempActiveDays[index]}
                       onChange={() => handleDayToggle(index)}
                     />
                   }
@@ -110,6 +156,21 @@ const TimerSchedule = () => {
                 />
               )
             )}
+          </Stack>
+          <Stack
+            display={"flex"}
+            justifyContent={"center"}
+            alignContent={"center"}
+            direction="row"
+            spacing={2}
+            mt={2}>
+            {/* <Button variant="contained" color="primary" onClick={handleSave}> */}
+            <Button variant="contained" color="primary">
+              Save
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={handleCancel}>
+              Cancel
+            </Button>
           </Stack>
         </>
       )}
