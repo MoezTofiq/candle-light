@@ -9,7 +9,7 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import React, { useEffect, useState } from "react"
 
-import { sendToContentScript } from "@plasmohq/messaging"
+import { sendToBackground, sendToContentScript } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
 
 import { log } from "~shared/helper"
@@ -86,12 +86,12 @@ const TimerSchedule = () => {
     setTimeRange(tempTimeRange)
     setActiveDays(tempActiveDays)
 
-    await storage.set("timerEnabled", tempTimerEnabled.toString())
-    await storage.set("timeRange", JSON.stringify(tempTimeRange))
-    await storage.set("activeDays", JSON.stringify(tempActiveDays))
+    // await storage.set("timerEnabled", tempTimerEnabled.toString())
+    // await storage.set("timeRange", JSON.stringify(tempTimeRange))
+    // await storage.set("activeDays", JSON.stringify(tempActiveDays))
 
-    await sendToContentScript({
-      name: "setSchedule",
+    await sendToBackground({
+      name: "scheduleTimer",
       body: {
         timerEnabled: tempTimerEnabled,
         timeRange: tempTimeRange,
@@ -176,7 +176,7 @@ const TimerSchedule = () => {
             spacing={2}
             mt={2}>
             {/* <Button variant="contained" color="primary" onClick={handleSave}> */}
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={handleSave}>
               Save
             </Button>
             <Button variant="outlined" color="secondary" onClick={handleCancel}>
