@@ -56,8 +56,6 @@ window.addEventListener("beforeunload", (event) => {
     // Optionally, save changes before unloading
     setStorage()
   }
-  // Optionally, add a confirmation dialog (not supported by all browsers)
-  // event.returnValue = "Are you sure you want to leave?";
 })
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -78,7 +76,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       element.style.backgroundColor = body.color || COLOR
       element.style.opacity = body.power ? body.opacity || OPACITY : "0"
 
-      opacity = body.power ? body.opacity || OPACITY : "0"
+      opacity = body.opacity || OPACITY
       power = body.power
       color = body.color
       setTimer()
@@ -105,21 +103,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 storage.watch({
   color: (c) => {
-    log(c.newValue)
+    log("color", c.newValue)
     const element = document.getElementById(elementName)
     if (element) {
       element.style.backgroundColor = c.newValue
     }
   },
   opacity: (c) => {
-    log(c.newValue)
+    log("opacity", c.newValue, "power", power)
     const element = document.getElementById(elementName)
-    if (element) {
+    if (element && power) {
       element.style.opacity = c.newValue
     }
   },
   power: async (c) => {
-    log(c.newValue)
+    log("power", c.newValue)
     const element = document.getElementById(elementName)
     if (element && c.newValue === true) {
       const opacity = await storage.get("opacity")
