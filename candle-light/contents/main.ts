@@ -56,8 +56,6 @@ window.addEventListener("beforeunload", (event) => {
     // Optionally, save changes before unloading
     setStorage()
   }
-  // Optionally, add a confirmation dialog (not supported by all browsers)
-  // event.returnValue = "Are you sure you want to leave?";
 })
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
