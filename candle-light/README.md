@@ -1,7 +1,7 @@
 # PROJECT DEVELOPMENT ENVIRONMENT
 
-- NODE : `v23.0.0`
-- PNPM PACKAGE MANAGER : `9.12.2`
+- NODE : `v22.12.0`
+- PNPM PACKAGE MANAGER : `10.6.1`
 - FRAMEWORK : PLASMO [Documentation](https://docs.plasmo.com/)
 - FRONTEND : REACT + TYPESCRIPT
 - OS : `Ubuntu 24.04.1 LTS`
@@ -12,8 +12,8 @@
 
 <!-- 'https://partner.microsoft.com/en-us/dashboard/microsoftedge/7c62f3e2-7f24-4ea8-a3b7-39ae0c92124d/packages/dashboard' -->
 
-Install Node.js v23.0.0
-Install pnpm package manager v9.12.2
+Install Node.js
+Install pnpm package manager
 
 In the terminal run
 
