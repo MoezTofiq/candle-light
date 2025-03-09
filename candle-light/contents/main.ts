@@ -73,6 +73,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   switch (name) {
     case "setAll":
+      element.style.transition = "opacity 0.5s ease, background-color 0.5s ease"
       element.style.backgroundColor = body.color || COLOR
       element.style.opacity = body.power ? body.opacity || OPACITY : "0"
 
@@ -83,6 +84,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       break
 
     case "setDefault":
+      element.style.transition = "opacity 0.5s ease, background-color 0.5s ease"
       element.style.backgroundColor = body.color || COLOR
       element.style.opacity = body.opacity || OPACITY
 
@@ -106,6 +108,7 @@ storage.watch({
     log("color", c.newValue)
     const element = document.getElementById(elementName)
     if (element) {
+      element.style.transition = "background-color 0.5s ease"
       element.style.backgroundColor = c.newValue
     }
   },
@@ -113,6 +116,7 @@ storage.watch({
     log("opacity", c.newValue, "power", power)
     const element = document.getElementById(elementName)
     if (element && power) {
+      element.style.transition = "opacity 0.5s ease"
       element.style.opacity = c.newValue
     }
   },
@@ -120,6 +124,7 @@ storage.watch({
     log("power", c.newValue)
     const element = document.getElementById(elementName)
     if (element && c.newValue === true) {
+      element.style.transition = "opacity 0.5s ease"
       const opacity = await storage.get("opacity")
       element.style.opacity = opacity
     } else if (element) {
@@ -144,6 +149,10 @@ const applyTint = async () => {
   overlay.style.zIndex = "100000"
   overlay.style.backgroundColor = color
   overlay.style.opacity = opacity
+
+  // Apply smooth transitions
+  overlay.style.transition = "opacity 0.5s ease, background-color 0.5s ease"
+
   const rootHTML = document.getElementsByTagName("html")[0]
   if (rootHTML) {
     log("found root html", rootHTML)
