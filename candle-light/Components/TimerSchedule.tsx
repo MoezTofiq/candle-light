@@ -1,15 +1,22 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import { Checkbox, FormControlLabel, Slider, Switch } from "@mui/material"
+import {
+  AlertTitle,
+  Checkbox,
+  FormControlLabel,
+  Slider,
+  Switch
+} from "@mui/material"
 import Accordion from "@mui/material/Accordion"
 import AccordionActions from "@mui/material/AccordionActions"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import AccordionSummary from "@mui/material/AccordionSummary"
+import Alert from "@mui/material/Alert"
 import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import React, { useEffect, useState } from "react"
 
-import { sendToBackground, sendToContentScript } from "@plasmohq/messaging"
+import { sendToBackground } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
 
 import { log } from "~shared/helper"
@@ -17,6 +24,8 @@ import { log } from "~shared/helper"
 const TimerSchedule = () => {
   const storage = new Storage()
 
+  const [successMessage, setSuccessMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
   const [timerEnabled, setTimerEnabled] = useState(false)
   const [timeRange, setTimeRange] = useState([18, 6])
   const [activeDays, setActiveDays] = useState([
@@ -90,7 +99,7 @@ const TimerSchedule = () => {
     // await storage.set("timeRange", JSON.stringify(tempTimeRange))
     // await storage.set("activeDays", JSON.stringify(tempActiveDays))
 
-    await sendToBackground({
+    const res = await sendToBackground({
       name: "scheduleTimer",
       body: {
         timerEnabled: tempTimerEnabled,
@@ -98,6 +107,12 @@ const TimerSchedule = () => {
         activeDays: tempActiveDays
       }
     })
+
+    if (res.error) {
+      setErrorMessage(res.message)
+    } else {
+      setSuccessMessage(res.message)
+    }
   }
 
   const handleCancel = () => {
@@ -168,6 +183,20 @@ const TimerSchedule = () => {
               </Stack>
             </>
           )}
+
+          {successMessage && (
+            <Alert severity="success" variant="outlined">
+              <AlertTitle>Success</AlertTitle>
+              {successMessage}
+            </Alert>
+          )}
+          {errorMessage && (
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              {errorMessage}
+            </Alert>
+          )}
+
           <Stack
             display={"flex"}
             justifyContent={"center"}

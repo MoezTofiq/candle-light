@@ -137,6 +137,8 @@ const applyTint = async () => {
   log("applying tint")
   const color = await storage.get("color")
   const opacity = await storage.get("opacity")
+  const power = await storage.get("power")
+
   log(color, opacity)
   const overlay = document.createElement("div")
   overlay.id = elementName
@@ -148,7 +150,7 @@ const applyTint = async () => {
   overlay.style.pointerEvents = "none"
   overlay.style.zIndex = "100000"
   overlay.style.backgroundColor = color
-  overlay.style.opacity = opacity
+  overlay.style.opacity = power ? opacity : "0"
 
   // Apply smooth transitions
   overlay.style.transition = "opacity 0.5s ease, background-color 0.5s ease"
