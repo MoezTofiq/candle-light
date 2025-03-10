@@ -1,6 +1,13 @@
 import GradientIcon from "@mui/icons-material/Gradient"
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew"
-import { CssBaseline, Divider, Input, Slider } from "@mui/material"
+import {
+  Checkbox,
+  CssBaseline,
+  Divider,
+  FormControlLabel,
+  Input,
+  Slider
+} from "@mui/material"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Card from "@mui/material/Card"
@@ -10,11 +17,12 @@ import Stack from "@mui/material/Stack"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
 import { MuiColorInput } from "mui-color-input"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 import { sendToContentScript } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
 
+import TimerSchedule from "~Components/TimerSchedule"
 import { COLOR, OPACITY } from "~shared/defaults"
 import { log } from "~shared/helper"
 
@@ -55,6 +63,7 @@ function IndexPopup() {
       const color = await storage.get("color")
       const opacity = await storage.get("opacity")
       const power = await storage.get("power")
+
       log("init : ", `${color}, ${opacity}, ${power}`)
       setPower(power === "true" || power ? true : false)
       setValue(Number(opacity) * 100)
@@ -156,11 +165,6 @@ function IndexPopup() {
                 </IconButton>
               </Box>
             </Stack>
-            {/* <Box>
-              <Button fullWidth variant="outlined">
-                Donate
-              </Button>
-            </Box> */}
             <Divider />
 
             <Stack
@@ -233,6 +237,8 @@ function IndexPopup() {
                 <Button variant="outlined">report a bug</Button>
               </Box>
             </Stack> */}
+            <Divider />
+            <TimerSchedule />
           </Stack>
         </CardContent>
       </Card>
