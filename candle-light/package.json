@@ -1,7 +1,7 @@
 {
   "name": "candle-light",
   "displayName": "Candle light",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "tinting your way",
   "author": "moeez tofiq <moeeztofiq@gmail.com>",
   "scripts": {

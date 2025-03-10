@@ -32,7 +32,7 @@ pnpm dev
 For firefox use :
 
 ```bash
-pnpm dev --verbose --target=firefox-mv2
+pnpm dev --verbose --target=firefox-mv3
 ```
 
 Open your browser and load the appropriate development build.
@@ -49,7 +49,7 @@ pnpm build
 For firefox : (this will create a zip file specifically for firefox)
 
 ```bash
-pnpm build --zip --target=firefox-mv2
+pnpm build --zip --target=firefox-mv3
 ```
 
 This should create a production bundle similar to the one submitted, will be available in the build/firefox-mv2-prod directory.
