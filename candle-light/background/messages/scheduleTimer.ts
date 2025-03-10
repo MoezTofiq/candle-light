@@ -19,7 +19,7 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
 
     res.send({
       error: false,
-      message: "Changes Saved"
+      message: "Changes Saved, will be applied at the start of the next hour"
     })
   } catch (error) {
     res.send({
