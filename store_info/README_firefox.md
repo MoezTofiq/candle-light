@@ -29,10 +29,10 @@ Run (the project locally) the development server:
 pnpm dev
 ```
 
-For opera use :
+For firefox use :
 
 ```bash
-pnpm dev --verbose --target=opera-mv3
+pnpm dev --verbose --target=firefox-mv2
 ```
 
 Open your browser and load the appropriate development build.
@@ -46,10 +46,10 @@ Run the following:
 pnpm build
 ```
 
-For opera : (this will create a zip file specifically for opera)
+For firefox : (this will create a zip file specifically for firefox)
 
 ```bash
-pnpm build --zip --target=opera-mv3
+pnpm build --zip --target=firefox-mv2
 ```
 
-This should create a production bundle similar to the one submitted, will be available in the build/opera-mv3-prod directory.
+This should create a production bundle similar to the one submitted, will be available in the build/firefox-mv2-prod directory.
