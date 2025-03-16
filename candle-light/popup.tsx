@@ -131,6 +131,27 @@ function IndexPopup() {
     setPower(!power)
   }
 
+  const handlePromotionClick = (value: string) => {
+    switch (value) {
+      case "feedback":
+        console.log("feedback clicked", process.env.PLASMO_PUBLIC_FEEDBACK_LINK)
+        chrome.tabs.create({
+          url: process.env.PLASMO_PUBLIC_FEEDBACK_LINK
+        })
+        break
+      case "tools":
+        console.log("tools clicked", process.env.PLASMO_PUBLIC_DEV_LINK)
+        chrome.tabs.create({
+          url: process.env.PLASMO_PUBLIC_DEV_LINK
+        })
+        break
+
+      default:
+        console.error("handlePromotionClick -> switch case not handled")
+        break
+    }
+  }
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Card>
@@ -226,17 +247,30 @@ function IndexPopup() {
 
             <Divider />
 
-            {/* <Stack direction="row" spacing={3}>
-              <Box>
+            <Stack direction="row" spacing={3}>
+              {/* <Box>
                 <Button variant="outlined">About me</Button>
+              </Box> */}
+              <Box>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={() => handlePromotionClick("feedback")}>
+                  give feedback
+                </Button>
               </Box>
               <Box>
-                <Button variant="outlined">other projects</Button>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={() => handlePromotionClick("tools")}>
+                  Other Tools
+                </Button>
               </Box>
-              <Box>
+              {/* <Box>
                 <Button variant="outlined">report a bug</Button>
-              </Box>
-            </Stack> */}
+              </Box> */}
+            </Stack>
             <Divider />
             <TimerSchedule />
           </Stack>
