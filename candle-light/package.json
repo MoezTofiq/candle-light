@@ -1,7 +1,7 @@
 {
   "name": "candle-light",
   "displayName": "Candle Light - BlueLight Filter",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "description": "tinting your way",
   "author": "moeez tofiq <moeeztofiq@gmail.com>",
   "scripts": {
