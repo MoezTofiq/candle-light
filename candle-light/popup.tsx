@@ -152,6 +152,21 @@ function IndexPopup() {
     }
   }
 
+  const getComplementaryColor = (rgb) => {
+    // Extract RGB values from "rgb(x, y, z)"
+    const match = rgb.match(/\d+/g)
+    if (!match) return "black" // Default if parsing fails
+
+    let [r, g, b] = match.map(Number)
+
+    // Invert the colors
+    r = 255 - r
+    g = 255 - g
+    b = 255 - b
+
+    return `rgb(${r}, ${g}, ${b})`
+  }
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Card>
@@ -181,7 +196,17 @@ function IndexPopup() {
               <Box>
                 <IconButton
                   onClick={handlePower}
-                  sx={{ color: power ? color : "" }}>
+                  sx={{
+                    backgroundColor: power ? "#333333" : "transparent", // Dark gray when active
+                    color: power ? "#FFA500" : "inherit", // Orange when active
+                    "&:hover": {
+                      backgroundColor: power
+                        ? "#444444"
+                        : "rgba(255, 165, 0, 0.2)" // Slightly lighter on hover
+                    },
+                    borderRadius: "50%",
+                    transition: "background-color 0.3s ease, color 0.3s ease"
+                  }}>
                   <PowerSettingsNewIcon />
                 </IconButton>
               </Box>
@@ -211,7 +236,7 @@ function IndexPopup() {
               <Box>
                 <Typography textAlign={"center"}>Tint opacity</Typography>
                 <Stack direction="row" spacing={3}>
-                  <GradientIcon sx={{ color: color }} />
+                  <GradientIcon color="primary" />
                   <Slider
                     value={typeof value === "number" ? value : 0}
                     onChange={handleSliderChange}
@@ -220,7 +245,15 @@ function IndexPopup() {
                     max={100}
                     marks
                     aria-labelledby="input-slider"
-                    sx={{ color: color }}
+                    sx={{
+                      color: "#FFA500", // Orange track & thumb
+                      "& .MuiSlider-thumb": {
+                        backgroundColor: "#FFA500"
+                      },
+                      "& .MuiSlider-rail": {
+                        backgroundColor: "#555555" // Gray rail for contrast
+                      }
+                    }}
                   />
                   <Input
                     value={value}
